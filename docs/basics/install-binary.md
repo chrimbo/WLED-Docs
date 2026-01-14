@@ -48,13 +48,35 @@ esptool.py write-flash 0x10000 ./WLED_XXX.bin
 
 When esptool.py says `Connecting...`, some ESP32 boards require you to hold the boot button (to the right of the USB port) for a few seconds  
 
-- If you experience issues, run this command before trying `write_flash` again (Note: this will erase all settings stored on the ESP!)
+- If you experience issues, run this command before trying `write-flash` again (Note: this will erase all settings stored on the ESP!)
 
 ```bash
 esptool.py erase-flash
 ```
 
 If you have a MagicHome controller, here is a [good video tutorial](https://www.youtube.com/watch?v=qgBAU39v07k) on how to flash it.
+
+#### ESP32-C3
+
+Firstly, flash the version 2 bootloader file, which you can find [here](https://github.com/wled/WLED-WebInstaller/raw/refs/heads/master/bin/Release/release_0_15_3/esp32-c3_bootloader_v2.bin).  
+This step only has to be done once, to update afterwards the bootloader does not have to be re-installed.
+
+```bash
+esptool.py write-flash 0x0 ./esp32-c3_bootloader_v2.bin
+```
+
+Now you can flash the actual firmware binary. Keep in mind the bootloader needs to have a flash offset of 0, but the firmware 0x10000.
+
+```bash
+esptool.py write-flash 0x10000 ./WLED_XXX.bin 
+```
+
+- If you experience issues, run this command before trying `write-flash` again (Note: this will erase all settings stored on the ESP!)
+
+```bash
+esptool.py erase-flash
+```
+
 
 ### ESP8266 Flashing method 3: [ESP Home Flasher](https://github.com/esphome/esphome-flasher/releases) tool
 
